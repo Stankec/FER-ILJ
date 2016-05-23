@@ -1,10 +1,33 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'xyz.stanko.Main'
+mainClassName = 'xyz.stanko.ilj.Main'
+
+repositories {
+   flatDir {
+       dirs 'lib'
+   }
+}
+
+dependencies {
+   compile name: 'apache-xmlbeans'
+   compile name: 'orai18n-mapping'
+   compile name: 'oxquery'
+   compile name: 'xmlparserv2_sans_jaxp_services'
+   compile name: 'xqjapi'
+   compile name: 'saxon9he'
+   compile name: 'saxon9-xqj'
+}
+
 
 jar {
     manifest {
         attributes 'Main-Class': 'xyz.stanko.ilj.Main'
+    }
+}
+
+run {
+    if ( project.hasProperty("appArgs") ) {
+        args Eval.me(appArgs)
     }
 }

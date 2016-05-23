@@ -1,41 +1,56 @@
 package xyz.stanko.ilj;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.*;
 
 public class Application {
-  private Database database;
-  private Display display;
+  private RemoteFileReader trainTransitXMLReader;
+  private RemoteFileReader personXMLReader;
+  private String [] args;
+  private int tripNumber;
+  private int month;
+  private String username;
+  private String password;
 
-  public Application() {
-    database = new Database();
-    display = new Display();
+  public Application(String [] args) {
+    this.args = args;
   }
 
   public void run() {
-    database.registerPin("1234");
-
-    while(true) {
-      challange();
+    if (this.args.length < 4) {
+      System.out.println("Pass USERNAME, PASSWORD, TRIP_NUMBER, MONTH");
+      System.exit(1);
     }
-  }
 
-  private void challange() {
-    display.promptEntry();
-    try {
-      BufferedReader br =
-        new BufferedReader(new InputStreamReader(System.in));
-      String input;
+    this.username = this.args[0];
+    this.password = this.args[1];
+    this.tripNumber = Integer.parseInt(this.args[2]);
+    this.month = Integer.parseInt(this.args[3]);
 
-      while((input = br.readLine()) != null) {
-        boolean pinValid = database.checkPin(input);
-        display.printResult(pinValid);
-        return;
-      }
-    }
-    catch(IOException io) {
-      io.printStackTrace();
-    }
+    this.trainTransitXMLReader = new RemoteFileReader(
+      "https://ilj.tel.fer.hr/lab2/PutovanjeVlakom",
+      this.username,
+      this.password
+    );
+
+    this.personXMLReader = new RemoteFileReader(
+      "https://ilj.tel.fer.hr/lab2/Osobe",
+      this.username,
+      this.password
+    );
+
+    TrainTransitXMLParser trainTransitXMLParser = new TrainTransitXMLParser(
+      trainTransitXMLReader.read(), this.tripNumber, this.month
+    );
+    List<String> ids = trainTransitXMLParser.parsePeopleIDs();
+
+    PersonXMLBuilder xml = new PersonXMLBuilder(
+      this.personXMLReader.read(),
+      ids
+    );
+
+    String result = xml.build();
+
+    System.out.println("||---- RESULTING XML ----||");
+    System.out.println(result);
   }
 }
