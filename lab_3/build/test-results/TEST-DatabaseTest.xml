@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="DatabaseTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2016-06-08T15:49:15" hostname="Stankos-MacBook-Pro.local" time="0.002">
+<testsuite name="DatabaseTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2016-06-08T15:56:01" hostname="Stankos-MacBook-Pro.local" time="0.002">
   <properties/>
-  <testcase name="checkPinReturnsFalseIfPinWasntRegisterdBeforehand" classname="DatabaseTest" time="0.001"/>
+  <testcase name="checkPinReturnsFalseIfPinWasntRegisterdBeforehand" classname="DatabaseTest" time="0.002"/>
   <testcase name="registerPinRegistersAStringPin" classname="DatabaseTest" time="0.0"/>
   <testcase name="checkPinReturnsTrueIfPinWasRegisterdBeforehand" classname="DatabaseTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>

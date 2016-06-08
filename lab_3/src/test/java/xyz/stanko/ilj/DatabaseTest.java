@@ -1,4 +1,6 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import org.junit.Test;
 import xyz.stanko.ilj.Database;
 
@@ -16,7 +18,7 @@ public class DatabaseTest {
     Database database = new Database();
 
     database.registerPin("1234");
-    assertEquals(true, database.checkPin("1234"));
+    assertTrue(database.checkPin("1234"));
   }
 
   @Test
@@ -24,6 +26,6 @@ public class DatabaseTest {
     Database database = new Database();
 
     database.registerPin("4321");
-    assertEquals(false, database.checkPin("1234"));
+    assertFalse(database.checkPin("1234"));
   }
 }
